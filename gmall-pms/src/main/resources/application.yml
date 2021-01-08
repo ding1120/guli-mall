@@ -1,0 +1,25 @@
+server:
+  port: 18081
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/pms/**/*.xml
+  type-aliases-package: com.atguigu.gmall.pms.entity
+
+  global-config:
+    db-config:
+      id-type: auto
+feign:
+  sentinel:
+    enabled: true
+spring:
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: gmall-tx-group
+  rabbitmq:
+    host: 192.168.144.131
+    virtual-host: /ding
+    password: ding
+    username: ding
+    publisher-confirm-type: correlated #生产者异步确认
+    publisher-returns: true #确保消息到达队列

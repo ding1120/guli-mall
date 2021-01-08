@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.gmall.pms.mapper.CategoryMapper">
+
+    <!--List<CategoryEntity> queryCategoriesWithSubsByPid(Long parentId)
+        autoMapping="true" 根据驼峰命名会自动进行映射
+    -->
+
+    <resultMap id="categoryMap" type="com.atguigu.gmall.pms.entity.CategoryEntity" autoMapping="true">
+        <id column="id" property="id"/>
+        <!--collection 是一对多，association是一对一
+            通过select语句去查询三级分类,查询字段为id
+        -->
+        <collection property="subs" ofType="CategoryEntity" javaType="List" select="queryCategoriesWithSubsByPid" column="id"/>
+
+    </resultMap>
+    <!--三级分类查询SQL语句都是同一个-->
+    <select id="queryCategoriesWithSubsByPid" resultMap="categoryMap">
+
+        select* from pms_category a where a.parent_id=#{parentId}
+    </select>
+</mapper>

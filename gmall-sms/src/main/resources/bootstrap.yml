@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: sms-service
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 91bbd60b-faf7-4000-a484-479f29d201fb
+        group: dev
+        file-extension: yml  # 默认找服务名.properties文件

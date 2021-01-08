@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.gmall.pms.mapper.SkuAttrValueMapper">
+    <select id="querySearchAttrValueBySkuId" resultType="SkuAttrValueEntity">
+        select a.id,a.attr_id,a.attr_name,a.attr_value,a.sku_id
+        from pms_sku_attr_value a
+        INNER JOIN pms_attr b
+        on a.attr_id=b.id
+        where a.sku_id=#{skuId}
+        and b.search_type=1
+    </select>
+    <!--public Map<String,Object> querySaleAttrValueMappingSkuIdBySpuId(Long spuId);-->
+    <select id="querySaleAttrValuesMappingSkuIdBySpuId" resultType="java.util.Map">
+        <!--根据sku_id将attr_value输出在一行-->
+        select b.sku_id, GROUP_CONCAT(b.attr_value ORDER BY b.attr_id ) as attr_values
+        from pms_sku a
+                 INNER JOIN pms_sku_attr_value b
+                            on a.id=b.sku_id
+        WHERE a.spu_id=#{spuId}
+        GROUP BY b.sku_id
+    </select>
+</mapper>
